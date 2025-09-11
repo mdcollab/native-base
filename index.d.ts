@@ -2,6 +2,7 @@ declare module "native-base" {
 	import * as React from "react";
 	import * as ReactNative from "react-native";
 	import { KeyboardAwareScrollViewProps } from "@codler/react-native-keyboard-aware-scroll-view";
+	import {PickerProps, PickerItemProps} from "@react-native-picker/picker"
 
 	type RnViewStyleProp = ReactNative.StyleProp<ReactNative.ViewStyle>;
 	type RnTextStyleProp = ReactNative.StyleProp<ReactNative.TextStyle>;
@@ -23,7 +24,7 @@ declare module "native-base" {
 			padder?: boolean;
 		}
 
-		interface Picker extends ReactNative.PickerProps, Testable {
+		interface Picker<T> extends PickerProps<T>, Testable {
 			mode?: "dialog" | "dropdown";
 			supportedOrientations?: "portrait" | "landscape"
 			iosHeader?: string;
@@ -1006,9 +1007,9 @@ declare module "native-base" {
 	/**
      * NativeBase.Picker
      */
-	export class Picker extends React.Component<NativeBase.Picker, any> { }
+	export class Picker<T> extends React.Component<NativeBase.Picker<T>, any> { }
 	namespace Picker {
-		export class Item extends React.Component<ReactNative.PickerItemProps, any> { }
+		export class Item<T> extends React.Component<PickerItemProps<T>, any> { }
 	}
 	/**
      * NativeBase.List

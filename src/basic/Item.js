@@ -10,7 +10,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { isArray, remove } from 'lodash';
-import { connectStyle } from 'native-base-shoutem-theme';
+import { connectStyle } from '../native-base-shoutem-theme';
 
 import variables from '../theme/variables/platform';
 import computeProps from '../utils/computeProps';

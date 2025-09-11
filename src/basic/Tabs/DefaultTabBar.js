@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import _ from 'lodash';
-import { connectStyle, StyleProvider } from 'native-base-shoutem-theme';
+import { connectStyle, ThemeConsumer } from '../../native-base-shoutem-theme';
 import mapPropsToStyleNames from '../../utils/mapPropsToStyleNames';
 import variable from './../../theme/variables/platform';
 import { TabHeading } from '../TabHeading';
@@ -35,9 +35,7 @@ const DefaultTabBar = createReactClass({
     accessible: PropTypes.array,
     accessibilityLabel: PropTypes.array
   },
-  contextTypes: {
-    theme: PropTypes.object
-  },
+  // Consume theme via modern context in render
 
   getDefaultProps() {
     return {
@@ -132,55 +130,61 @@ const DefaultTabBar = createReactClass({
   },
 
   render() {
-    const variables = this.context.theme
-      ? this.context.theme['@@shoutem.theme/themeStyle'].variables
-      : variable;
-    const platformStyle = variables.platformStyle;
-    const containerWidth = this.props.containerWidth;
-    const numberOfTabs = this.props.tabs.length;
-    const tabUnderlineStyle = {
-      position: 'absolute',
-      width: containerWidth / numberOfTabs,
-      height: 4,
-      backgroundColor: variables.topTabBarActiveBorderColor,
-      bottom: 0
-    };
-
-    const left = this.props.scrollValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [0, containerWidth / numberOfTabs]
-    });
     return (
-      <TabContainer
-        style={[
-          { backgroundColor: variables.tabDefaultBg },
-          this.props.tabContainerStyle ? this.props.tabContainerStyle : {}
-        ]}
-      >
-        {this.props.tabs.map((name, page) => {
-          const isTabActive = this.props.activeTab === page;
-          const renderTab = this.props.renderTab || this.renderTab;
-          return renderTab(
-            name,
-            page,
-            isTabActive,
-            this.props.goToPage,
-            this.props.tabStyle[page],
-            this.props.activeTabStyle[page],
-            this.props.textStyle[page],
-            this.props.activeTextStyle[page],
-            this.props.tabHeaderStyle[page],
-            variables.tabFontSize,
-            this.props.disabled[page],
-            this.props.disabledTextColor,
-            this.props.accessible[page],
-            this.props.accessibilityLabel[page]
+      <ThemeConsumer>
+        {({ theme }) => {
+          const variables = theme
+            ? theme['@@shoutem.theme/themeStyle'].variables
+            : variable;
+          const platformStyle = variables.platformStyle;
+          const containerWidth = this.props.containerWidth;
+          const numberOfTabs = this.props.tabs.length;
+          const tabUnderlineStyle = {
+            position: 'absolute',
+            width: containerWidth / numberOfTabs,
+            height: 4,
+            backgroundColor: variables.topTabBarActiveBorderColor,
+            bottom: 0
+          };
+
+          const left = this.props.scrollValue.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, containerWidth / numberOfTabs]
+          });
+          return (
+            <TabContainer
+              style={[
+                { backgroundColor: variables.tabDefaultBg },
+                this.props.tabContainerStyle ? this.props.tabContainerStyle : {}
+              ]}
+            >
+              {this.props.tabs.map((name, page) => {
+                const isTabActive = this.props.activeTab === page;
+                const renderTab = this.props.renderTab || this.renderTab;
+                return renderTab(
+                  name,
+                  page,
+                  isTabActive,
+                  this.props.goToPage,
+                  this.props.tabStyle[page],
+                  this.props.activeTabStyle[page],
+                  this.props.textStyle[page],
+                  this.props.activeTextStyle[page],
+                  this.props.tabHeaderStyle[page],
+                  variables.tabFontSize,
+                  this.props.disabled[page],
+                  this.props.disabledTextColor,
+                  this.props.accessible[page],
+                  this.props.accessibilityLabel[page]
+                );
+              })}
+              <Animated.View
+                style={[tabUnderlineStyle, { left }, this.props.underlineStyle]}
+              />
+            </TabContainer>
           );
-        })}
-        <Animated.View
-          style={[tabUnderlineStyle, { left }, this.props.underlineStyle]}
-        />
-      </TabContainer>
+        }}
+      </ThemeConsumer>
     );
   }
 });

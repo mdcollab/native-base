@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Image } from 'react-native';
-import { connectStyle } from 'native-base-shoutem-theme';
+import { connectStyle, ThemeContext } from '../native-base-shoutem-theme';
 import _ from 'lodash';
 import md5 from 'blueimp-md5';
 
 import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
 import computeProps from '../utils/computeProps';
 
-import NativeBaseComponent from './Base/NativeBaseComponent';
 
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/';
 
-class Gravatar extends NativeBaseComponent {
+class Gravatar extends React.Component {
+  static contextType = ThemeContext;
   getInitialStyle() {
     return {
       gravatar: {

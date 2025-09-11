@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Text as RNText } from 'react-native';
 import _ from 'lodash';
-import { connectStyle } from 'native-base-shoutem-theme';
+import { connectStyle } from '../native-base-shoutem-theme';
 
 import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
 

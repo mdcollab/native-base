@@ -1,4 +1,4 @@
-import { Theme } from 'native-base-shoutem-theme';
+import { Theme } from './native-base-shoutem-theme';
 
 import getThemeStyle from './theme/components';
 

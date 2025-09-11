@@ -8,6 +8,7 @@ import {
   View
 } from 'react-native';
 import { Text } from './Text';
+import { ThemeContext } from '../native-base-shoutem-theme';
 import { Icon } from './Icon';
 import variable from '../theme/variables/platform';
 
@@ -21,6 +22,7 @@ const styles = StyleSheet.create({
 });
 
 class DefaultHeader extends React.Component {
+  static contextType = ThemeContext;
   render() {
     const {
       disable,
@@ -67,6 +69,7 @@ class DefaultHeader extends React.Component {
 }
 
 class DefaultContent extends React.Component {
+  static contextType = ThemeContext;
   render() {
     const { content, contentStyle } = this.props;
     const variables = this.context.theme
@@ -170,6 +173,7 @@ class AccordionItem extends React.Component {
 }
 
 export class Accordion extends React.Component {
+  static contextType = ThemeContext;
   constructor(props) {
     super(props);
 

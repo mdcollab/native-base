@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import { isEqual } from 'lodash';
-import { connectStyle, StyleProvider } from 'native-base-shoutem-theme';
+import { connectStyle, ThemeConsumer } from '../../native-base-shoutem-theme';
 import mapPropsToStyleNames from '../../utils/mapPropsToStyleNames';
 import variable from './../../theme/variables/platform';
 import { TabHeading } from '../TabHeading';
@@ -45,9 +45,7 @@ const ScrollableTabBar = createReactClass({
     }),
     onScroll: PropTypes.func
   },
-  contextTypes: {
-    theme: PropTypes.object
-  },
+  // Consume theme via modern context in render
 
   getDefaultProps() {
     return {
@@ -221,79 +219,85 @@ const ScrollableTabBar = createReactClass({
   },
 
   render() {
-    const variables = this.context.theme
-      ? this.context.theme['@@shoutem.theme/themeStyle'].variables
-      : variable;
-    const tabUnderlineStyle = {
-      position: 'absolute',
-      height: 4,
-      backgroundColor: variables.topTabBarActiveBorderColor,
-      bottom: 0
-    };
-
-    const dynamicTabUnderline = {
-      left: this.state._leftTabUnderline,
-      width: this.state._widthTabUnderline
-    };
-
     return (
-      <View
-        style={[
-          styles.container,
-          { backgroundColor: this.props.backgroundColor },
-          this.props.style
-        ]}
-        onLayout={this.onContainerLayout}
-      >
-        <ScrollView
-          automaticallyAdjustContentInsets={false}
-          ref={scrollView => {
-            this._scrollView = scrollView;
-          }}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          directionalLockEnabled
-          onScroll={this.props.onScroll}
-          bounces={false}
-          scrollsToTop={false}
-        >
-          <View
-            style={[
-              styles.tabs,
-              { width: this.state._containerWidth },
-              this.props.tabsContainerStyle
-            ]}
-            ref={'tabContainer'}
-            onLayout={this.onTabContainerLayout}
-          >
-            {this.props.tabs.map((name, page) => {
-              const isTabActive = this.props.activeTab === page;
-              const renderTab = this.props.renderTab || this.renderTab;
-              return renderTab(
-                name,
-                page,
-                isTabActive,
-                this.props.goToPage,
-                this.measureTab.bind(this, page),
-                this.props.tabStyle[page],
-                this.props.activeTabStyle[page],
-                this.props.textStyle[page],
-                this.props.activeTextStyle[page],
-                this.props.tabHeaderStyle[page],
-                this.props.tabFontSize[page]
-              );
-            })}
-            <Animated.View
+      <ThemeConsumer>
+        {({ theme }) => {
+          const variables = theme
+            ? theme['@@shoutem.theme/themeStyle'].variables
+            : variable;
+          const tabUnderlineStyle = {
+            position: 'absolute',
+            height: 4,
+            backgroundColor: variables.topTabBarActiveBorderColor,
+            bottom: 0
+          };
+
+          const dynamicTabUnderline = {
+            left: this.state._leftTabUnderline,
+            width: this.state._widthTabUnderline
+          };
+
+          return (
+            <View
               style={[
-                tabUnderlineStyle,
-                dynamicTabUnderline,
-                this.props.underlineStyle
+                styles.container,
+                { backgroundColor: this.props.backgroundColor },
+                this.props.style
               ]}
-            />
-          </View>
-        </ScrollView>
-      </View>
+              onLayout={this.onContainerLayout}
+            >
+              <ScrollView
+                automaticallyAdjustContentInsets={false}
+                ref={scrollView => {
+                  this._scrollView = scrollView;
+                }}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+                directionalLockEnabled
+                onScroll={this.props.onScroll}
+                bounces={false}
+                scrollsToTop={false}
+              >
+                <View
+                  style={[
+                    styles.tabs,
+                    { width: this.state._containerWidth },
+                    this.props.tabsContainerStyle
+                  ]}
+                  ref={'tabContainer'}
+                  onLayout={this.onTabContainerLayout}
+                >
+                  {this.props.tabs.map((name, page) => {
+                    const isTabActive = this.props.activeTab === page;
+                    const renderTab = this.props.renderTab || this.renderTab;
+                    return renderTab(
+                      name,
+                      page,
+                      isTabActive,
+                      this.props.goToPage,
+                      this.measureTab.bind(this, page),
+                      this.props.tabStyle[page],
+                      this.props.activeTabStyle[page],
+                      this.props.textStyle[page],
+                      this.props.activeTextStyle[page],
+                      this.props.tabHeaderStyle[page],
+                      this.props.tabFontSize[page]
+                    );
+                  })}
+                  <Animated.View
+                    style={[
+                      tabUnderlineStyle,
+                      dynamicTabUnderline,
+                      this.props.underlineStyle
+                    ]}
+                  />
+                </View>
+              </ScrollView>
+            </View>
+          );
+        }}
+      </ThemeConsumer>
     );
   },
 

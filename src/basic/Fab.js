@@ -8,14 +8,16 @@ import {
   StyleSheet
 } from 'react-native';
 import { remove, merge, clone } from 'lodash';
-import { connectStyle } from 'native-base-shoutem-theme';
+import { connectStyle } from '../native-base-shoutem-theme';
 
 import variables from '../theme/variables/platform';
 import { PLATFORM } from '../theme/variables/commonColor';
 import computeProps from '../utils/computeProps';
 import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
 
-import { Button } from './Button';
+// Use the unstyled base Button for Animated wrapper to avoid wrapping
+// a functional component returned by connectStyle
+import { Button as Button } from './Button';
 
 const DIRECTION = {
   DOWN: 'down',
@@ -31,7 +33,8 @@ const POSITION = {
   TOP_RIGHT: 'topRight'
 };
 
-const AnimatedFab = Animated.createAnimatedComponent(Button);
+// We animate a wrapper view to avoid passing a functional component
+// into `createAnimatedComponent` (which is unsupported).
 
 class Fab extends Component {
   constructor(props) {
@@ -430,18 +433,53 @@ class Fab extends Component {
   renderButtons() {
     const childrenArray = React.Children.toArray(this.props.children);
     const newChildren = [];
-    childrenArray.slice(1).map((child, i) =>
+    childrenArray.slice(1).map((child, i) => {
+      // Split wrapper style (position, transform) from button style (size, radius, colors)
+      const { direction, active } = this.props;
+      const wrapperPos = direction
+        ? this.fabOtherBtns(direction, i)
+        : {
+            top: undefined,
+            left: 8,
+            right: 0,
+            bottom:
+              active === false
+                ? Platform.OS === PLATFORM.IOS
+                  ? 8
+                  : 8
+                : i * 50 + 50
+          };
+      const wrapperStyle = {
+        position: 'absolute',
+        top: wrapperPos.top,
+        left: wrapperPos.left,
+        right: wrapperPos.right,
+        bottom: wrapperPos.bottom,
+        transform: this.state.active
+          ? [{ scale: new Animated.Value(1) }]
+          : [{ scale: this.buttonScale }]
+      };
+
+      const buttonStyle = StyleSheet.flatten([
+        {
+          height: variables.fabButtonHeight,
+          width: variables.fabButtonHeight,
+          left: variables.fabButtonLeft,
+          borderRadius: variables.fabButtonBorderRadius,
+          marginBottom: variables.fabButtonMarginBottom,
+          backgroundColor: variables.fabBackgroundColor
+        },
+        child.props.style
+      ]);
+
       newChildren.push(
-        <AnimatedFab
-          style={this.getOtherButtonStyle(child, i)}
-          {...this.prepareButtonProps(child, i)}
-          fabButton
-          key={i}
-        >
-          {child.props.children}
-        </AnimatedFab>
-      )
-    );
+        <Animated.View key={i} style={wrapperStyle}>
+          <Button {...this.prepareButtonProps(child, i)} fabButton style={buttonStyle}>
+            {child.props.children}
+          </Button>
+        </Animated.View>
+      );
+    });
     return newChildren;
   }
 

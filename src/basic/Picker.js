@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import createReactClass from 'create-react-class';
 import { Picker } from '@react-native-picker/picker';
-import { connectStyle } from 'native-base-shoutem-theme';
+import { connectStyle } from '../native-base-shoutem-theme';
 
 import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
 

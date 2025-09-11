@@ -1,2 +1,2 @@
-Object.defineProperty(exports,"__esModule",{value:true});exports.default=function(){var pickerTheme={};return pickerTheme;};
+Object.defineProperty(exports,"__esModule",{value:true});exports.default=void 0;var _default=function _default(){var pickerTheme={};return pickerTheme;};exports.default=_default;
 //# sourceMappingURL=Picker.ios.js.map

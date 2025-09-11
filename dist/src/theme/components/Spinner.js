@@ -1,2 +1,2 @@
-Object.defineProperty(exports,"__esModule",{value:true});exports.default=function(){var spinnerTheme={height:80};return spinnerTheme;};
+Object.defineProperty(exports,"__esModule",{value:true});exports.default=void 0;var _default=function _default(){var spinnerTheme={height:80};return spinnerTheme;};exports.default=_default;
 //# sourceMappingURL=Spinner.js.map

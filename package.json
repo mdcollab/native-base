@@ -30,6 +30,8 @@
   "license": "Apache-2.0",
   "private": false,
   "dependencies": {
+    "@babel/core": "^7.27.1",
+    "@babel/runtime": "^7.27.1",
     "@codler/react-native-keyboard-aware-scroll-view": "1.0.1",
     "@react-native-community/datetimepicker": "^3.0.2",
     "@react-native-picker/picker": "^1.9.7",
@@ -41,7 +43,7 @@
     "fs-extra": "^2.0.0",
     "jest-react-native": "^18.0.0",
     "lodash": "^4.17.14",
-    "native-base-shoutem-theme": "0.3.1",
+    "metro-react-native-babel-preset": "^0.77.0",
     "opencollective-postinstall": "^2.0.2",
     "print-message": "^2.1.0",
     "prop-types": "^15.5.10",
@@ -52,7 +54,8 @@
     "tween-functions": "^1.0.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.18.0",
+    "@babel/cli": "^7.27.2",
+    "@react-native/babel-preset": "0.74.89",
     "babel-eslint": "^7.2.3",
     "babel-jest": "^24.8.0",
     "babel-preset-react-native": "4.0.0",
@@ -68,8 +71,8 @@
     "jest": "^24.8.0",
     "prettier": "^1.18.2",
     "pretty-quick": "^1.11.1",
-    "react": "16.4.1",
-    "react-native": "^0.60.4",
+    "react": "18.2.0",
+    "react-native": "^0.74.5",
     "react-test-renderer": "16.4.1"
   },
   "gitHead": "5bbeacc403ba97622703699132c55d8359344004",

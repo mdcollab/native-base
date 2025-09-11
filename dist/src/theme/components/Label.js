@@ -1,2 +1,2 @@
-Object.defineProperty(exports,"__esModule",{value:true});exports.default=function(){var labelTheme={'.focused':{width:0},fontSize:17};return labelTheme;};
+Object.defineProperty(exports,"__esModule",{value:true});exports.default=void 0;var _default=function _default(){var labelTheme={'.focused':{width:0},fontSize:17};return labelTheme;};exports.default=_default;
 //# sourceMappingURL=Label.js.map

@@ -1,2 +1,2 @@
-Object.defineProperty(exports,"__esModule",{value:true});exports.default=function(){var tabTheme={flex:1,backgroundColor:'#FFF'};return tabTheme;};
+Object.defineProperty(exports,"__esModule",{value:true});exports.default=void 0;var _default=function _default(){var tabTheme={flex:1,backgroundColor:'#FFF'};return tabTheme;};exports.default=_default;
 //# sourceMappingURL=Tab.js.map

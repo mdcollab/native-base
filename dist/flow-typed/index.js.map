@@ -1,1 +1,1 @@
-{"version":3,"sources":[],"names":[],"mappings":"","file":"index.js","sourcesContent":[]}
+{"version":3,"file":"index.js","names":[],"sources":["../../flow-typed/index.js"],"sourcesContent":["declare module 'react-native' {\n  declare module.exports: any;\n}\ndeclare module 'lodash' {\n  declare module.exports: any;\n}\ndeclare module 'color' {\n  declare module.exports: any;\n}"],"mappings":"","ignoreList":[]}

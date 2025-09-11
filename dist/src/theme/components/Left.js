@@ -1,2 +1,2 @@
-Object.defineProperty(exports,"__esModule",{value:true});exports.default=function(){var leftTheme={flex:1,alignSelf:'center',alignItems:'flex-start'};return leftTheme;};
+Object.defineProperty(exports,"__esModule",{value:true});exports.default=void 0;var _default=function _default(){var leftTheme={flex:1,alignSelf:'center',alignItems:'flex-start'};return leftTheme;};exports.default=_default;
 //# sourceMappingURL=Left.js.map

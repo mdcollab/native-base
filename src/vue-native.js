@@ -1,4 +1,4 @@
-import { StyleProvider } from 'native-base-shoutem-theme';
+import { StyleProvider } from './native-base-shoutem-theme';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
 import Drawer from './basic/Drawer';

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ThemeContext } from '../native-base-shoutem-theme';
 import { Modal, View } from 'react-native';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -8,6 +9,7 @@ import variable from '../theme/variables/platform';
 import { Text } from './Text';
 
 export class DatePicker extends React.Component {
+  static contextType = ThemeContext;
   static defaultProps = {
     disabled: false
   };
